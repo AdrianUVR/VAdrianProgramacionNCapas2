@@ -1,0 +1,112 @@
+﻿@model ML.Departamento
+@{
+    ViewData["Title"] = "DepartamentoGetAll";
+}
+
+<h1>DepartamentoGetAll</h1>
+
+
+<div class="container">
+    <div class="row">
+        <h2>Aqui podras ver los departamentos existentes</h2>
+    </div>
+    <hr />
+
+    <div class="row">
+        <div style="float:left">
+            @Html.ActionLink("+", "Form", "Departamento", htmlAttributes: new { @class = "btn btn-success" })
+        </div>
+    </div>
+
+
+    @using (Html.BeginForm("GetAll", "Departamento", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+    {
+
+
+        <div class="row">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Departamentos)
+                            @Html.DropDownListFor(model => model.Departamentos, new SelectList(Model.Departamentos, "IdDepartamento", "Nombre"), "Selecciona un Departamento", new { @class = "form-control" })
+                        </div>
+
+
+
+
+
+
+            <div class="form-3">
+                <div class="col-md-3">
+
+                    @Html.ActionLink("Buscar", "DepartamentoGetAll", "Departamento", htmlAttributes: new { @class = " btn-success" })
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    }
+</div>
+
+
+
+
+<hr />
+<div class="row">
+    @if (Model.Departamentos != null)
+    {
+        //tabla
+        <table class="table table-dark table-bordered table-responsive table-hover" id="tblDepartamento">
+            <thead>
+                <tr>
+                    <td class="text-center" style=" font-weight:bold;">Editar</td>
+                    <td class="hidden">Nombre</td>
+                    <td class="hidden">imagen</td>
+                    <td class="text-center" style=" font-weight:bold;">Eliminar</td>
+
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (ML.Departamento departamento in Model.Departamentos)
+                {
+              
+                    <tr>
+                        <td class="text-center"><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form", "Producto", new { IdDepartamento = departamento.IdDepartamento })"></a></td>
+
+                        <td>@departamento.Nombre</td>
+
+
+                           <td>
+                @if (departamento.Imagen != null)
+                {
+
+                <img id="Img" src="data:image/*;base64,@departamento.Imagen" style="width:100px ; height:100px" />
+
+                }
+                else
+                {
+                <img id="Img" src="~/Imagen/depas.jpg" style="width:100px ; height:100px" />
+                }
+
+                </td>
+                    <td class="text-center"><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Producto", new { IdDepartamento = departamento.IdDepartamento })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                       
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+
+
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">Ocurrio un error al realizar la consulta </div>
+    }
+
+</div>

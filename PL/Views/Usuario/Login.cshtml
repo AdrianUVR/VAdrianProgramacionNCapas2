@@ -1,0 +1,23 @@
+﻿@model ML.Usuario
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<head>
+
+    <link rel="stylesheet" href="~/css/Login.css" />
+</head>
+<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<div class="logo"></div>
+@using (Html.BeginForm("Login", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="login-block">
+        <h1>Login</h1>
+        @Html.TextBoxFor(model => model.UserName, new { @class = "",placeholder="username" })
+        @Html.TextBoxFor(model => model.Password, new { @class = "",placeholder="password" })
+
+
+       
+        <button>Submit</button>
+    </div>
+}
